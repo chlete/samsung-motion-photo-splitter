@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 """
-Samsung's S7 picture and video cutter.
+Samsung's S7 picture and video splitter.
 S7 generates a container which encapsulates picture and video. The first part
 is a JPEG with its usual footer plus Samsung's own (MotionPhoto_Data). Second
 part is the video.
