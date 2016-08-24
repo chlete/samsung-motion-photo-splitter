@@ -18,7 +18,7 @@ Samsung's Motion Photo format consists of a picture (jpeg) and movie (mp4) merge
 
                                                                        
                                                                                
-## Convert  pictures                                                               
+## Converting pictures                                                               
                                                                             
                                                                               
 ### Linux  / OSX
