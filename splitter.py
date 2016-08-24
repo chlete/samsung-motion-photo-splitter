@@ -19,7 +19,7 @@ from mmap import mmap
 
 
 __author__ = "Christian Lete"
-__license__ = "GPL"
+__license__ = "Apache 2.0"
 __version__ = "0.9"
 __maintainer__ = "Christian Lete"
 __email__ = "christian.lete {at} gmail com"
