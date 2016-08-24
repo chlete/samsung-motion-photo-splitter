@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 """
-Samsung's S7 picture and video cutter.
+Samsung's S7 Motion Photo splitter.
 S7 generates a container which encapsulates picture and video. The first part
 is a JPEG with its usual footer plus Samsung's own (MotionPhoto_Data). Second
 part is the video.
@@ -19,7 +19,7 @@ from mmap import mmap
 
 
 __author__ = "Christian Lete"
-__license__ = "GPL"
+__license__ = "Apache 2.0"
 __version__ = "0.9"
 __maintainer__ = "Christian Lete"
 __email__ = "christian.lete {at} gmail com"
