@@ -1,0 +1,6 @@
+.DS_Store
+*~
+*.jpg
+*.mp4
+*.pyc
+__pycache__

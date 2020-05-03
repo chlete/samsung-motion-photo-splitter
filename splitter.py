@@ -11,6 +11,10 @@ Count the bytes for each offset and write the files.
 JPEG: byte zero to samsungs footer end
 MP4: JPEG's footer + 1 to end of file (size of the file)
 
+Behaviour:
+This script handles multiple files and splits each one into a JPG and an MP4.
+If the file does not contain a motion part, it proceeds to the next file.
+At the end, the script reports a list of all files that could not be split.
 """
 
 import sys
@@ -28,7 +32,6 @@ __email__ = "christian.lete {at} gmail com"
 eop = "\x4D\x6F\x74\x69\x6F\x6E\x50\x68\x6F\x74\x6F\x5F\x44\x61\x74\x61"
 
 
-
 def write_files(fname,jpeg,mp4):
   """
   Creates videos and files
@@ -36,7 +39,6 @@ def write_files(fname,jpeg,mp4):
   sname = fname.replace('.jpg','')
   picture = sname + "_new" + ".jpg"
   video = sname + "_new" +  ".mp4"
-
 
   with open(picture,'w') as f:
       f.write(jpeg)
@@ -47,8 +49,6 @@ def write_files(fname,jpeg,mp4):
     with open(video,'w') as f:
       f.write(mp4)
 
-
-
 def spliter(fname):
   """
   Splits video and picture
@@ -56,12 +56,14 @@ def spliter(fname):
   with open(fname,'r+b') as f:
     mm = mmap(f.fileno(),0)
     file_size = mm.size()
+
     # size of the file - len of the samsung magic = processed file
     magic_samsung = mm.find(eop)
     magic_samsung_lim = file_size - len(eop)
+
     #Do not process if magic is not found, and if found at the end
     if magic_samsung == -1 or  magic_samsung == magic_samsung_lim:
-      sys.exit("Error: file %s has no motion photo" % fname)
+      raise Exception("Error: file %s has no motion photo" % fname)
     else:
       samsung_jpeg_offset = magic_samsung + len(eop)
       mpeg_start = samsung_jpeg_offset + 1
@@ -79,8 +81,16 @@ def spliter(fname):
   
 
 if len(sys.argv) < 2:
-  sys.exit('Usage:: %s <file>' % sys.argv[0])
+  sys.exit('Usage:: %s <files>' % sys.argv[0])
 
-fname = sys.argv[1]
-spliter(fname)
+files = sys.argv[1:]
+not_motion = []
+for fname in files:
+  try:
+    spliter(fname)
+  except:
+    not_motion.append(fname)
+
+for jpg_file in not_motion:
+  print(jpg_file)
 
